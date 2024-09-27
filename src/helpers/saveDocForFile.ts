@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { docsPath } from "./documentationMetadata";
 
 export async function saveDocForFile(filePath: string, fileContent: string) {
   const { outputDir, fileName } = getDocPath(filePath);
@@ -23,7 +24,7 @@ function getDocPath(filePath: string) {
   const fileDir = path.dirname(filePath);
   const fileName = `${path.basename(filePath, path.extname(filePath))}.md`;
 
-  const outputDir = path.join(path.dirname(""), "docs", "code", fileDir);
+  const outputDir = path.join(docsPath, "code", fileDir);
 
   return {
     path: path.join(outputDir, fileName),

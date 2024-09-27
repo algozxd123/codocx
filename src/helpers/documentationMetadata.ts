@@ -10,7 +10,14 @@ interface DocumentationMetadata {
   };
 }
 
-const metadataFilePath = path.join(process.cwd(), "docs", "metadata.json");
+export let docsPath = path.join(process.cwd(), "docs");
+
+let metadataFilePath = path.join(docsPath, "metadata.json");
+
+export function setDocsPath(filePath: string) {
+  docsPath = path.join(process.cwd(), filePath);
+  metadataFilePath = path.join(docsPath, "metadata.json");
+}
 
 export function loadMetadata(): DocumentationMetadata {
   if (fs.existsSync(metadataFilePath)) {
@@ -50,11 +57,11 @@ export function updateMetadata(item: TreeItemFlatted): void {
   saveMetadata(metadata);
 }
 
-export function checkForDeletedFiles(): void {
+export function checkForDeletedFiles(targetPath = ""): void {
   const metadata = loadMetadata();
 
   for (const filePath of Object.keys(metadata))
-    if (!fs.existsSync(filePath)) deleteDocumentation(filePath);
+    if (!fs.existsSync(path.join(targetPath, filePath))) deleteDocumentation(filePath);
 }
 
 export function deleteDocumentation(filePath: string): void {

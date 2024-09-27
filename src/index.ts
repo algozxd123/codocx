@@ -18,6 +18,7 @@ program
   .option("-p, ---path <path>")
   .option("-n, --non-interactive", "Run the command in non-interactive mode")
   .option("-c, ---chunkSize <chunkSize>")
+  .option("-o, ---output <output>")
   .action(withErrorCatcher(main));
 
 program.parse(process.argv);
